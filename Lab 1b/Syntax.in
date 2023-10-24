@@ -1,0 +1,20 @@
+- program = {statement}
+-  statement = {decl_statement|arr_statement|assign_statement|if_statement|while_statement|return_statement|function_call_statement} ";"
+
+- types = "milnumar" | "milsir"
+- decl_statement = types | identifier_list
+- arr_statement = types identifier"[" positive_number "]" clean_identifier_list
+- clean_identifier_list = identifier {"," identifier}
+- identifier_list = identifier ["=" expression] {"," identifier ["=" expression]}
+- expression = int_expression | string_expression
+- int_expression = integer | identifier | int_expression ("+"|"-"|"*"|"/") int_expression | "(" int_expression ("+"|"-"|"*"|"/") int_expression ")"
+- string_expression = string | identifier | string_expression + string_expression
+- expression_list = expression{"," expression}
+- assign_statement = identifier "=" expression
+- if_statement = "milintrebi" "(" condition ")" "{" {statement} "}" ["milaltfel" "{" {statement} "}"]
+- condition = expression ("=="|"<"|"<="|">"|">=") expression
+- while_statement = "miltimp" "("condition")" "{" {statement} "}"
+
+- return_statement = "milreturnezi" expression
+- function_call_statement = function_name "(" expression_list? ")"
+- function_name = "milafisezi" | "milcitesti" | "milreturnezi"

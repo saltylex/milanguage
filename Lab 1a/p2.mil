@@ -1,0 +1,19 @@
+// check if prime
+
+milnumar milsalut(){ 
+    milnumar x;
+    milcitesti in x;
+    milintrebi (x <= 1) {
+        milscrii pe "not a prime";
+        milreturnezi milzero;
+    }
+
+    milpentru (milnumar i = 2; i <= x / 2; i++)
+    milintrebi (x % i == milzero) {
+            milscrii pe "not a prime";
+            milreturnezi milzero;
+        }
+
+    milscrii pe "prime";
+    milreturnezi milzero;
+}

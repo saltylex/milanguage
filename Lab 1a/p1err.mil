@@ -1,0 +1,14 @@
+// lexical errors
+
+milnumar milsalut(){
+    milnumar 2x,y,z; // 2x does not follow the proper rules for an identifier
+    milcitesti in x in y in z;
+    milintrebi (x <= y si x <= z)
+        milscrii pe x pe " is the smallest";@ // the "@" symbol is an unused identifier with no purpose
+
+    milaltfel milintrebi (y <= x si y <= z)
+        milscrii pe y pe " is the smallest";
+
+    milaltfel
+        milscrii pe z pe " is the smallest";
+}

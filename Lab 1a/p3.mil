@@ -1,0 +1,17 @@
+// suma de n numere
+
+milnumar milsalut(){
+    milnumar sum = milzero;
+    milnumar n, aux;
+    milscrii pe "how many numbers: ";
+    milcitesti in n;
+
+    milpentru(milnumar i=milzero; i<n; i++){
+        milscrii pe "input number "+ milinsiri(i+1) + ":";
+        milcitesti in aux;
+        sum += aux;
+    }
+
+    milscrii pe "sum: " pe sum;
+    milreturnezi milzero;
+}

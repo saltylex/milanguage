@@ -1,0 +1,60 @@
+MilLanguage Lexical Description
+
+Alphabet:
+- Lowercase letters: a to z
+- Uppercase letters: A to Z
+- Digits: 0 to 9
+- Underscore: _
+
+Lexical Elements:
+
+Operators:
+- Arithmetic Operators: +, -, *, /
+- Comparison Operators: ==, <, <=, >, >=
+- Assignment Operators: =, +=, -=, *=, /=
+
+Separators:
+- Braces: {, }
+- Parentheses: (, )
+- Semicolon: ;
+- Space
+- Newline
+- Double Quotation Mark: "
+- Comma: ,
+
+Reserved Words:
+- milnumar (integer)
+- milsir (string)
+- milintrebi (if)
+- milaltfel (else)
+- miltimp (while)
+- milpentru (for)
+- milafisezi (write)
+- milcitesti (read)
+- milreturnezi (return)
+
+Identifier:
+- An identifier is a sequence of letters, digits, and underscores that starts with a letter or an underscore.
+- beginning_identifier = "a" | "b" | ... | "z" | "_"
+- continuation_identifier = beginning_identifier | "0" | "1" | ... | "9"
+- identifier = beginning_identifier{continuation_identifier}
+- Example: _, var_slay, var1, v1,
+
+Letter:
+- A letter is any uppercase or lowercase letter.
+- letter = "A"|"B"|..|"Z"|"a"|"b"|..|"z"
+
+Digit:
+- A digit is any numeric digit.
+- digit = "0"|"1"|..|"9"
+
+Integer:
+- An integer is a numeric value that can be positive or negative.
+- non_zero_digit = "1"|"2"|..|"9"
+- integer = ["+"|"-"] non_zero_digit {digit} | "0"
+- Examples: 42, -123, 0
+
+String:
+- A string is a sequence of letters, digits, underscores, and spaces enclosed in double quotation marks ("").
+- string = ""{letter|digit|"_"| " "}""
+- Example: "Hello_World _123"

@@ -1,0 +1,14 @@
+// smallest number out of 3
+
+milnumar milsalut(){
+    milnumar x,y,z;
+    milcitesti in x in y in z;
+    milintrebi (x <= y si x <= z)
+        milscrii pe x pe " is the smallest";
+
+    milaltfel milintrebi (y <= x si y <= z)
+        milscrii pe y pe " is the smallest";
+
+    milaltfel
+        milscrii pe z pe " is the smallest";
+}
