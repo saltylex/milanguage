@@ -1,0 +1,24 @@
+// Lexic.txt
+
+58 - A string is a sequence of letters, digits, underscores, and spaces enclosed in double quotation marks ("").
+59 - string = ""{letter|digit|"_"| " "}""
+Question: The double quotes are not exactly clear to me, should strings be formatted like ""string"" ? The examples in Lab 1a use single quotes.
+
+// Syntax.in
+
+6 - arr_statement = types identifier"[" positive_number "]" clean_identifier_list
+Nit: add a space between "types identifier" and the square bracket
+
+11 - string_expression = string | identifier | string_expression + string_expression
+Shouldn't the last option be string_expression "+" string_expression?
+
+19 - function_call_statement = function_name "(" expression_list? ")"
+Nit: remove the "?" in "expression_list?"
+
+20 - function_name = "milafisezi" | "milcitesti" | "milreturnezi"
+Question: in the examples, you use milafisezi with "pe" and milcitesti with "in". Is that still the case here, are they now going to be simple function calls?
+
+// Overall
+
+Really fun stuff, everything is cleanly written, simple but to the point, good repo organisation as well, looking forward to see how this project evolves.
+:3
