@@ -1,0 +1,21 @@
+program statement types decl_statement arr_statement clean_identifier_list identifier_list expression int_expression string_expression expression_list assign_statement if_statement condition while_statement return_statement function_call_statement function_name
+; milnumar milsir positive_number identifier = int_expression + - * / ( ) string + , == < <= > >= milintrebi milaltfel miltimp milreturnezi milafisezi milcitesti eps
+program
+program -> statement; program | eps
+statement -> decl_statement | arr_statement | assign_statement | if_statement | while_statement | return_statement | function_call_statement ;
+types -> milnumar | milsir
+decl_statement -> types | identifier_list
+arr_statement -> types identifier [ positive_number ] clean_identifier_list
+clean_identifier_list -> identifier | identifier , clean_identifier_list
+identifier_list -> identifier = expression | identifier = expression , identifier_list
+expression -> int_expression | string_expression
+int_expression -> integer | identifier | int_expression + int_expression | int_expression - int_expression | int_expression * int_expression |  int_expression / int_expression
+string_expression -> string | identifier | string_expression + string_expression
+expression_list -> expression | expression, expression_list
+assign_statement -> identifier = expression
+if_statement -> milintrebi ( condition ) { statement } | milintrebi ( condition ) { statement } milaltfel { statement }
+condition -> expression == expression | expression < expression | expression <= expression | expression > expression | expression >= expression
+while_statement -> miltimp ( condition ) { statement }
+return_statement -> milreturnezi expression | milreturnezi
+function_call_statement -> function_name ( expression_list ) | function_name ( )
+function_name -> milafisezi | milcitesti | milreturnezi
