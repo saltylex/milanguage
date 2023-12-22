@@ -3,7 +3,7 @@ class Configuration:
         self.current_state = 'normal'
         self.current_position = 1
         self.stack = []
-        self.input = [[starting_symbol]]
+        self.input = [starting_symbol]
 
     def push(self, elem):
         self.stack.append(elem)
@@ -15,10 +15,13 @@ class Configuration:
         return self.stack[-1]
 
     def push_input(self, elem):
-        self.input.append(elem)
+        if isinstance(elem, list):
+            self.input[:0] = elem
+        else:
+            self.input.insert(0, elem)
 
     def pop_input(self):
-        return self.input.pop()
+        return self.input.pop(0)
 
     def increment(self):
         self.current_position += 1

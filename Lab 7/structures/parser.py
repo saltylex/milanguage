@@ -1,9 +1,10 @@
 from structures.config import Configuration
 from structures.grammar import Grammar
+from structures.parser_output import ParserOutput
 
 
 class Parser:
-    def __init__(self, grammar: Grammar, word, state='q') -> None:
+    def __init__(self, grammar: Grammar, word, state='normal') -> None:
         self.grammar = grammar
         self.word = word
         self.state = state
@@ -14,12 +15,8 @@ class Parser:
 
     def advance(self) -> None:
         head = self.config.pop_input()
-        terminal = head[0]
 
-        if len(head) > 1:
-            self.config.push_input(head[1:])
-
-        self.config.push(terminal)
+        self.config.push(head)
         self.config.increment()
 
     def back(self) -> None:
@@ -35,26 +32,38 @@ class Parser:
 
     def another_try(self):
         top_working_stack = self.config.peek()
-        if len(top_working_stack) > 1:
+        productions = self.grammar.get_productions_for_nonterminals(top_working_stack[0])
+        last_production_index = productions[-1][1]
+        if top_working_stack[1] < last_production_index:
             self.another_try1()
-        elif self.config.get_current_position == 1 and top_working_stack == self.grammar.start_symbol:
+        elif self.config.get_current_position() == 1 and top_working_stack[0] == self.grammar.start_symbol:
             self.another_try3()
         else:
             self.another_try2()
 
     def another_try1(self):
         self.config.current_state = 'normal'
-        self.config.pop_input()
         top_working_stack = self.config.pop()
-        next_simple_production = top_working_stack[0]
-        self.config.push(next_simple_production)
-        self.config.push_input(next_simple_production[0])
+        non_terminal = top_working_stack[0]
+        productions = self.grammar.get_productions_for_nonterminals(non_terminal)
+        current_production_length = len(
+            [production for production in productions if production[1] == top_working_stack[1]][0][0])
+        for i in range(current_production_length):
+            self.config.pop_input()
+        next_production_input = [production for production in productions if production[1] == top_working_stack[1] + 1][
+            0]
+        self.config.push_input(next_production_input[0])
+        self.config.push((top_working_stack[0], next_production_input[1]))
 
     def another_try2(self):
-        self.config.pop_input()
         top_working_stack = self.config.pop()
-        top_working_stack_parent = top_working_stack[0]
-        self.config.push_input([top_working_stack_parent])
+        non_terminal = top_working_stack[0]
+        productions = self.grammar.get_productions_for_nonterminals(non_terminal)
+        current_production_length = len(
+            [production for production in productions if production[1] == top_working_stack[1]][0][0])
+        for i in range(current_production_length):
+            self.config.pop_input()
+        self.config.push_input(non_terminal)
 
     def another_try3(self):
         self.config.pop_input()
@@ -63,38 +72,44 @@ class Parser:
 
     def expand(self):
         top_input_stack = self.config.pop_input()
-        non_terminal = top_input_stack[0]
-        if len(top_input_stack) > 1:
-            self.config.push_input(top_input_stack[1:])
-        production = self.grammar.get_productions_for_nonterminals(non_terminal)
+        production = self.grammar.get_productions_for_nonterminals(top_input_stack)
         first_simple_production = production[0]
-        self.config.push(first_simple_production)
+        self.config.push((top_input_stack, first_simple_production[1]))
         self.config.push_input(first_simple_production[0])
 
-    def parse(self, word: list):
-        while self.config.current_state not in ['f', 'e']:
-            if self.config.current_state == 'q':
-                if self.config.current_position == len(word) + 1 and len(self.config.input) == 0:
+    def parse(self):
+        while self.config.current_state not in ['final', 'error']:
+            if self.config.current_state == 'normal':
+                if self.config.current_position >= len(self.word) and len(self.config.input) == 0:
                     self.success()
                 else:
-                    if len(self.config.input) > 0 and self.config.input[-1] in self.grammar.nonterminals:
+                    if len(self.config.input) > 0 and self.config.input[0] in self.grammar.nonterminals:
+                        print('expand')
                         self.expand()
-                    elif self.config.current_position < len(word) and len(self.config.input) > 0 and self.config.input[
-                        -1] == word[self.config.current_position - 1]:
+                    elif self.config.current_position <= len(self.word) and len(self.config.input) > 0 and \
+                            self.config.input[0] == self.word[self.config.current_position - 1]:
+                        print('advance')
                         self.advance()
                     else:
+                        print('mi')
                         self.momentary_insuccess()
             else:
-                if self.config.current_state == 'b':
-                    if len(self.config.stack) > 0 and self.config.stack[-1] in self.grammar.terminals:
+                if self.config.current_state == 'back':
+                    if len(self.config.stack) > 0 and ((isinstance(self.config.stack[-1], tuple) and
+                                                        self.config.stack[-1][0] in self.grammar.terminals) or (
+                                                               isinstance(self.config.stack[-1], str) and
+                                                               self.config.stack[-1] in self.grammar.terminals)):
+                        print('back')
                         self.back()
                     elif len(self.config.stack) > 0:
+                        print('another try')
                         self.another_try()
 
-        if self.config.current_state == 'e':
+        if self.config.current_state == 'error':
             print('error')
             return None
         print('sequence accepted')
+        print(ParserOutput(self.config).build_string_of_productions())
         return self.config.stack
 
     def get_tree(self, production_string):

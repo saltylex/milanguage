@@ -2,6 +2,11 @@
 
 ### Milanguage
 
+<<<<<<< HEAD
+=======
+**Github Repository: https://github.com/saltylex/milanguage**
+
+>>>>>>> d3e6a7aba598a33062026d3b2af3298c8322f092
 **Student: Goia Alexia Maria, 933/1**
 
 This is a documentation of the implementation in Python of Milanguage, a C++ based programming language.
