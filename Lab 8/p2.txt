@@ -1,0 +1,19 @@
+    milnumar x;
+    milnumar i;
+    i = 1;
+    milcitesti >> x;
+    milintrebi (x <= 1) {
+        milscrii << "not a prime";
+        milreturnezi 0;
+    }
+
+    miltimp (i <= x / 2){
+
+    milintrebi (x % i == 0) {
+            milscrii << "not a prime";
+            milreturnezi 0;
+    i += 1;
+        }}
+
+    milscrii << "prime";
+    milreturnezi 0;
