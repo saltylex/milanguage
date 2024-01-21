@@ -1,0 +1,17 @@
+    milnumar sum = 0, i;
+    milnumar n, aux;
+    milsir fin;
+    milscrii << "how many numbers ";
+    milcitesti >> n;
+
+    miltimp(i<n){
+        fin += (i+1) + "-";
+        milscrii << fin;
+        milcitesti >> aux;
+        sum += aux;
+        i++;
+        fin = ""
+    }
+
+    milscrii << "sum " << sum;
+    milreturnezi 0;

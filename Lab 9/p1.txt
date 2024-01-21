@@ -1,0 +1,11 @@
+
+    milnumar x,y,z;
+    milcitesti >> x >> y >> z;
+    milintrebi (x <= y si x <= z)
+        milscrii << x << " is the smallest ";
+
+    milaltfel milintrebi (y <= x si y <= z)
+        milscrii << y << " is the smallest";
+
+    milaltfel
+        milscrii << z << " is the smallest";
